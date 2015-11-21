@@ -1,0 +1,170 @@
+ environment division.
+ configuration section.
+     source-computer. ibm-686.
+     object-computer. ibm-686.
+ input-output section.
+ file-control.
+     select geek-sig             assign to "geekcode.sig"
+                                 organization is line sequential.
+ data division.
+ file section.
+ fd  geek-sig. 
+ 01  geek-output-rec             pic x(80).
+ working-storage section.
+ copy "geekcode.cpy".
+ 77  ws-print-line1              pic x(80)     value spaces.
+ 77  ws-print-line2              pic x(80)     value spaces.
+ 77  ws-print-line3              pic x(80)     value spaces.
+ 77  ws-print-line4              pic x(80)     value spaces.
+ 77  ws-command                  pic a(20)     value spaces.
+ 77  ws-cl-args                  pic x(10)     value spaces.
+ 77  ws-page-cnt                 pic 99        value zeroes.
+ 77  ws-cnt                      pic xx        value spaces.
+ 77  ws-tot-page                 pic 99        value 45.
+ 77  ws-rec-cnt                  pic 9         value zeroes.
+ 77  ws-return-sys-code          pic 9(8) comp value zeroes.
+ 77  ws-entry                    pic xx        value zeroes.
+ 01 ws-valid-flag                pic x         value "n".
+    88  ws-valid-data                          value "y".
+    88  ws-invalid-data                        value "n".
+ 01 ws-valid-pens                pic x         value "n".
+    88  ws-how-many                            value "y".
+ procedure division.
+ 00000-control.
+     perform 10000-setup
+     perform 20000-process
+     perform 30000-cleanup.
+ 10000-setup.
+     accept ws-cl-args from command-line end-accept
+     perform 93000-parse-cmdln
+     open output geek-sig
+     initialize  geek-output-rec.
+ 20000-process.
+     perform 90000-clear-screen
+     perform 91000-print-heading
+     perform 21000-create.
+ 21000-create.
+     perform 22100-type      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22200-dress     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22300-hair      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22400-height    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22450-weight    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22500-glasses   until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22600-pens      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22670-slides    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22700-auto      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22800-age       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 22900-weird     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23000-verbage   until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23100-comp      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23200-flavor    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23250-unix      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23300-perl      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23400-linux     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23500-386bsd    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23600-news      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23700-web       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23800-emacs     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 23900-kibo      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24000-ms        until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24100-mac       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24200-vms       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24400-pol       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24500-cp        until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24700-trek      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 24800-bab       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25000-jeop      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25100-role      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25200-magic     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25300-tv        until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25400-books     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25500-doom      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25600-barney    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25700-educ      until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25800-music     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 25900-house     until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 26000-friends   until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 26100-rel       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 26200-nut       until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 26300-gender    until ws-valid-data
+     set ws-valid-flag to "n"
+     perform 26350-sex       until ws-valid-data
+     perform 26500-print.
+ 22100-type.
+     add 1 to ws-page-cnt
+     move ws-page-cnt (2:1) to ws-cnt
+     display "Geek Type
+-       "             Page: " ws-cnt " of " ws-tot-page
+            end-display
+     display "====================================================
+-"==========================="
+         end-display
+     display " 1 GB  - Geek of Business                15 GL  -
+-"Geek of Literature"
+         end-display
+     display " 2 GC  - Geek of Classics                16 GMC -
+-"Geek of Mass Communications"
+         end-display
+     display " 3 GCA - Geek of Commercial Arts         17 GM  -
+-"Geek of Math"
+         end-display
+     display " 4 GCM - Geek of Computer Management     18 GMD -
+-"Geek of Medicine"
+         end-display
+     display " 5 GCS - Geek of Computer Science        19 GMU -
+-"Geek of Music"
+         end-display
+     display " 6 GCC - Geek of Communications          20 GPA -
+-"Geek of Performing Arts"
+         end-display
+     display " 7 GE  - Geek of Engineering             21 GP  -
+-"Geek of Philosophy"
+         end-display
+     display " 8 GED - Geek of Education               22 GS  -
+-"Geek of Science"
+         end-display
+     display " 9 GFA - Geek of Fine Arts               23 GSS -
+-"Geek of Social Science"
+         end-display

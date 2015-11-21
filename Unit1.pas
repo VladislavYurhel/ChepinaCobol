@@ -78,6 +78,7 @@ var
    ResultQ : Double;
 begin
    StringForCode := mmo1.Text;
+   StringForCode := UpperCase(StringForCode);
    for i:=0 to Length(allVariables) - 1 do
    begin
       allVariables[i].NumberOfUses := 0;
@@ -509,6 +510,25 @@ begin
       repeat
          DeleteOtherSymb := RegEx.MatchedText;
          DeleteOtherSymb := StringReplace(DeleteOtherSymb,' ','',[rfReplaceAll, rfIgnoreCase]);
+         for i:=0 to Length(variables) - 1 do
+            if (DeleteOtherSymb = variables[i].variable) then
+            begin
+               if (variables[i].P = True) then
+                  variables[i].P := False;
+               variables[i].M := True;
+            end;
+         Delete(stringForSearch, RegEx.MatchedOffset, RegEx.MatchedLength);
+         RegEx.Subject := stringForSearch;
+      until not(RegEx.MatchAgain);
+   end;
+   RegEx.RegEx := '(?<=SET)\s*[A-Z][A-Z\d\-]*';
+   RegEx.Subject := stringForSearch;
+   RegEx.Compile;
+   if (RegEx.Match) then
+   begin
+      repeat
+         DeleteOtherSymb := RegEx.MatchedText;
+         DeleteOtherSymb := StringReplace(DeleteOtherSymb,' ','',[rfReplaceAll,rfIgnoreCase]);
          for i:=0 to Length(variables) - 1 do
             if (DeleteOtherSymb = variables[i].variable) then
             begin
