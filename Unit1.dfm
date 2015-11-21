@@ -3,7 +3,9 @@ object Form1: TForm1
   Top = 78
   Width = 840
   Height = 562
-  Caption = 'Form1'
+  Caption = 
+    #1052#1057#1080#1057' '#1063#1077#1087#1080#1085#1072' - COBOL | '#1070#1088#1075#1077#1083#1100' '#1042'.'#1070'. 451002 | GITHUB: github.com/Vl' +
+    'adislavYurhel/ChepinaCobol'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
