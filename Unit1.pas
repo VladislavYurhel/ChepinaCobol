@@ -79,14 +79,15 @@ var
 begin
    StringForCode := mmo1.Text;
    StringForCode := UpperCase(StringForCode);
-   for i:=0 to Length(allVariables) - 1 do
+   {for i:=0 to Length(allVariables) - 1 do
    begin
       allVariables[i].NumberOfUses := 0;
       allVariables[i].P := False;
       allVariables[i].C := False;
       allVariables[i].M := False;
       allVariables[i].T := False;
-   end;
+   end;}
+   SetLength(allVariables, 0);
    DeleteStrings(StringForCode);
    DeleteCommentary(StringForCode);
    SearchGlobalVars(StringForCode, allVariables);
@@ -119,7 +120,8 @@ var
    RegEx : TPerlRegEx;
 begin
    RegEx := TPerlRegEx.Create;
-   RegEx.RegEx := '[\s\d]+\*.*?.*';
+   //RegEx.RegEx := '[\s\d]+\*.*?.*';
+   RegEx.RegEx := '\*.*';
    RegEx.Subject := stringForDelete;
    RegEx.Compile;
    if (RegEx.Match) then
