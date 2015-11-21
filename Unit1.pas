@@ -72,21 +72,12 @@ end;
 procedure TForm1.btn2Click(Sender: TObject);
 var
    i : Integer;
-   RegEx : TPerlRegEx;
    StringForCode : String;
    CountP, CountM, CountC, CountT : Integer;
    ResultQ : Double;
 begin
    StringForCode := mmo1.Text;
    StringForCode := UpperCase(StringForCode);
-   {for i:=0 to Length(allVariables) - 1 do
-   begin
-      allVariables[i].NumberOfUses := 0;
-      allVariables[i].P := False;
-      allVariables[i].C := False;
-      allVariables[i].M := False;
-      allVariables[i].T := False;
-   end;}
    SetLength(allVariables, 0);
    DeleteStrings(StringForCode);
    DeleteCommentary(StringForCode);
@@ -96,6 +87,10 @@ begin
    SearchModifiedVars(StringForCode, allVariables);
    SearchSpuriousVars(StringForCode, allVariables);
    mmo2.Clear;
+   CountP := 0;
+   CountM := 0;
+   CountC := 0;
+   CountT := 0;
    for i:=0 to Length(allVariables) - 1 do
    begin
       mmo2.Text := mmo2.Text + allVariables[i].variable + #13#10 + 'P : ' + BoolToStr(allVariables[i].P) + ' M : ' + BoolToStr(allVariables[i].M) + ' C : ' + BoolToStr(allVariables[i].C) + ' T : ' + BoolToStr(allVariables[i].T) + #13#10;
@@ -109,6 +104,7 @@ begin
          inc(CountT);
    end;
    ResultQ := 1 * CountP + 2 * CountM + 3 * CountC + 0.5 * CountT;
+   mmo2.Text := mmo2.Text + #13#10 + 'Всего переменных: ' + IntToStr(Length(allVariables));
    mmo2.Text := mmo2.Text + #13#10 + 'Кол-во P: ' + IntToStr(CountP) + #13#10 + 'Кол-во M: ' + IntToStr(CountM) + #13#10
    + 'Кол-во C: ' + IntToStr(CountC) + #13#10 + 'Кол-во T: ' + IntToStr(CountT) + #13#10 + 'Результат Q = '
    + FloatToStrF(ResultQ, ffGeneral, 1, 2);
@@ -116,7 +112,6 @@ end;
 
 procedure TForm1.DeleteCommentary(var stringForDelete : String);
 var
-   i : Integer;
    RegEx : TPerlRegEx;
 begin
    RegEx := TPerlRegEx.Create;
@@ -175,8 +170,8 @@ end;
 procedure TForm1.SearchControlVars(var stringForSearch: String; var variables: TPVariablesArray);
 var
    i : Integer;
-   RegEx, RegExTwo : TPerlRegEx;
-   NewReg, DeleteOtherSymb : String;
+   RegEx : TPerlRegEx;
+   DeleteOtherSymb : String;
    DeleteThisVar : Boolean;
 begin
    RegEx := TPerlRegEx.Create;
@@ -384,7 +379,6 @@ var
    VarFind : Boolean;
    DeleteOtherSymb : String;
 begin
-   i := 0;
    CountVariables := 0;
    RegEx := TPerlRegEx.Create;
    RegEx.RegEx := '(?<=\s)[A-Z]+[A-Z\-\d]*(?=\s+PIC\s[A-Z\d\(\)]+\sVALUES)';
@@ -475,8 +469,6 @@ procedure TForm1.SearchModifiedVars(var stringForSearch: String; var variables: 
 var
    i : Integer;
    RegEx, RegExTwo : TPerlRegEx;
-   NewReg : String;
-   DeleteThisVar : Boolean;
    DeleteOtherSymb : String;
 begin
    RegEx := TPerlRegEx.Create;
